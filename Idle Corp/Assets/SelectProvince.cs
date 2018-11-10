@@ -11,7 +11,7 @@ public class SelectProvince : MonoBehaviour {
 	void Start () {
 		
 	}
-	
+    Color lastColor = new Color(0,0,0);
 	// Update is called once per frame
 	void Update () {
         if (Input.GetMouseButtonDown(0))
@@ -23,8 +23,12 @@ public class SelectProvince : MonoBehaviour {
             {
                 if (hit.transform.tag == "Province")
                 {
-                    int id = int.Parse(hit.transform.name);
-                    gameLogic.currentProvince = id-1;
+                    int id = int.Parse(hit.transform.name) - 1;
+                    if(lastColor !=new Color(0,0,0)) gameLogic.provinces[gameLogic.currentProvince].GetComponent<Renderer>().material.color = lastColor;
+                    lastColor = gameLogic.provinces[id].GetComponent<Renderer>().material.color;
+                    gameLogic.provinces[id].GetComponent<Renderer>().material.color = Color.red;
+                    
+                    gameLogic.currentProvince = id;
                 }
             }
         }
