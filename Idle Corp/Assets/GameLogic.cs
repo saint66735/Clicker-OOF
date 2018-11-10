@@ -35,6 +35,8 @@ class Province
     public List<BuildingInstance> buildings;
     public bool unlocked;
     public float income;
+    public float multiplier;
+    public float increaseMultiplierCost;
 
     public Province(string name, float cost, float baseProduction)
     {
@@ -43,6 +45,8 @@ class Province
         this.baseProduction = baseProduction;
         unlocked = false;
         income = 0;
+        multiplier = 1;
+        increaseMultiplierCost = 5;
     }
 }
 public class GameLogic : MonoBehaviour {
@@ -56,9 +60,13 @@ public class GameLogic : MonoBehaviour {
     public Button buyButton;
     public Image panel;
     public Button BuildButton;
+    public Text buildingInfo;
 
     public int currentProvince;
     public float money;
+    public float globalMultiplier;
+
+    public float increaseGlobalMultiplierCost;
 
     float time=0;
     // Use this for initialization
@@ -77,10 +85,13 @@ public class GameLogic : MonoBehaviour {
         
 
         money = 25;
-	}
-	
-	// Update is called once per frame
-	void Update () {
+        globalMultiplier = 1;
+        increaseGlobalMultiplierCost = 20;
+
+    }
+
+    // Update is called once per frame
+    void Update () {
         time += Time.deltaTime;
         ProvinceIncome();
         calculateMoney();
@@ -103,6 +114,10 @@ public class GameLogic : MonoBehaviour {
                 provinceData[currentProvince].income;
              
         }
+        buildingInfo.text = "cost:" + buildings[dropdown.value].cost *
+            Mathf.Pow(1.1f, provinceData[currentProvince].buildings[dropdown.value].level) + '\n'+"production:" +
+            buildings[dropdown.value].production + '\n' + "level:" + 
+            provinceData[currentProvince].buildings[dropdown.value].level;
         moneyDisplay.text ="money:"+ money;
 	}
 
@@ -147,16 +162,18 @@ public class GameLogic : MonoBehaviour {
     public void Build()
     {
         int id = dropdown.value;
-        if (money > provinceData[currentProvince].buildings[id].building.cost)
+        float cost = provinceData[currentProvince].buildings[id].building.cost *
+            Mathf.Pow(1.1f, provinceData[currentProvince].buildings[id].level);
+        if (money > cost)
         {
             provinceData[currentProvince].buildings[id].level++;
-            money -= provinceData[currentProvince].buildings[id].building.cost;
-            provinceData[currentProvince].buildings[id].building.cost*= 1.1f;
+            money -= cost;
+            //provinceData[currentProvince].buildings[id].building.cost*= 1.1f;
         }
     }
     void calculateMoney()
     {
-        if (time > 2)
+        if (time > 1)
         {
             float income = 0;
             foreach (var province in provinceData)
@@ -169,7 +186,6 @@ public class GameLogic : MonoBehaviour {
     }
     void ProvinceIncome()
     {
-
         foreach (var province in provinceData)
         {
             float income = 0;
@@ -177,7 +193,25 @@ public class GameLogic : MonoBehaviour {
             {
                 income += (building.building.production * building.level) * province.baseProduction;
             }
-            province.income = income;
+            province.income = income * province.multiplier * globalMultiplier;
+        }
+    }
+    public void IncreaseProvinceMultiplier()
+    {
+        if (money > provinceData[currentProvince].increaseMultiplierCost)
+        {
+            provinceData[currentProvince].multiplier *= 1.05f;
+            money -= provinceData[currentProvince].increaseMultiplierCost;
+            provinceData[currentProvince].increaseMultiplierCost *= 1.1f;
+        }
+    }
+    public void IncreaseGlobalMultiplier()
+    {
+        if (money > increaseGlobalMultiplierCost)
+        {
+            globalMultiplier *= 1.05f;
+            money -= increaseGlobalMultiplierCost;
+            increaseGlobalMultiplierCost *= 1.1f;
         }
     }
 }
