@@ -103,7 +103,7 @@ public class GameLogic : MonoBehaviour {
         buyProvinceCostMultiplier = 1;
 
         //Save();
-        if(File.Exists("Assets//save.txt")) ReadSave();
+        //if(File.Exists("Assets//save.txt")) ReadSave();
     }
 
     // Update is called once per frame
@@ -137,7 +137,7 @@ public class GameLogic : MonoBehaviour {
             buyButton.interactable = true;
             BuildButton.interactable = false;
             provinceDisplay.text = "name:" + provinceData[currentProvince].name + '\n' + "cost:" +
-                provinceData[currentProvince].cost * buyProvinceCostMultiplier +
+                ShortenNumber( provinceData[currentProvince].cost * buyProvinceCostMultiplier) +
                 '\n' + "production:" + provinceData[currentProvince].baseProduction;
         }
         if (provinceData[currentProvince].unlocked)
@@ -146,12 +146,12 @@ public class GameLogic : MonoBehaviour {
             buyButton.interactable = false;
             BuildButton.interactable = true;
             provinceDisplay.text = "name:" + provinceData[currentProvince].name + '\n' + "income:" +
-                provinceData[currentProvince].income;
+                ShortenNumber(provinceData[currentProvince].income);
              
         }
-        buildingInfo.text = "cost:" + buildings[dropdown.value].cost *
-            Mathf.Pow(1.2f, provinceData[currentProvince].buildings[dropdown.value].level) + '\n'+"production:" +
-            buildings[dropdown.value].production + '\n' + "level:" + 
+        buildingInfo.text = "cost:" + ShortenNumber( buildings[dropdown.value].cost *
+            Mathf.Pow(1.2f, provinceData[currentProvince].buildings[dropdown.value].level))+ '\n'+"production:" +
+            ShortenNumber(buildings[dropdown.value].production) + '\n' + "level:" + 
             provinceData[currentProvince].buildings[dropdown.value].level;
         moneyDisplay.text = ShortenNumber(money);// "money:"+ money;
 	}
@@ -206,7 +206,7 @@ public class GameLogic : MonoBehaviour {
             provinceData[currentProvince].buildings[id].level++;
             money -= cost;
             //provinceData[currentProvince].buildings[id].building.cost*= 1.1f;
-            if (provinceObjects[currentProvince] == null)
+            /*if (provinceObjects[currentProvince] == null)
             {
                 GameObject temp = Instantiate(factoryPrefab, new Vector3(), new Quaternion());
                 temp.transform.parent = provinces[currentProvince].transform;
@@ -215,7 +215,7 @@ public class GameLogic : MonoBehaviour {
                 //temp.transform.rotation = Quaternion.Euler(temp.transform.rotation.eulerAngles * 1);
                 provinceObjects[currentProvince] = temp;
                 
-            }
+            }*/
         }
     }
     void calculateMoney()
@@ -305,6 +305,7 @@ public class GameLogic : MonoBehaviour {
     }
     public void ReadSave()
     {
+        if (!File.Exists("Assets//save.txt")) return;
         string[] lines = File.ReadAllLines("Assets//save.txt");
         string[] parts = lines[0].Split(' ');
 
@@ -341,5 +342,20 @@ public class GameLogic : MonoBehaviour {
     public void Exit()
     {
         Application.Quit();
+    }
+    public void ResetGame()
+    {
+        provinceData.Clear();
+        ReadProvinceData();
+        BuildProvince();
+
+        time = 0;
+        money = 200;
+        globalMultiplier = 1;
+        increaseGlobalMultiplierCost = 20;
+        moneyOnClick = 1;
+        increaseGlobalMultiplierCost = 15;
+        increaseMoneyOnClickCost = 20;
+        buyProvinceCostMultiplier = 1;
     }
 }
