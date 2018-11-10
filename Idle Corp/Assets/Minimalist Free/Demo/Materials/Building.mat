@@ -6,13 +6,14 @@ Material:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: stone
+  m_Name: Building
   m_Shader: {fileID: 4800000, guid: 534b44f15d8e80847a1e825dedc7c581, type: 3}
   m_ShaderKeywords: BACKSOLID BOTTOMSOLID FRONTSOLID LEFTSOLID RIGHTSOLID TOPSOLID
     _AOUV_UV0 _GRADIENTSPACE_WORLD_SPACE _GRADSETTINGS_B_USE_GLOBAL _GRADSETTINGS_D_USE_GLOBAL
     _GRADSETTINGS_F_USE_GLOBAL _GRADSETTINGS_L_USE_GLOBAL _GRADSETTINGS_R_USE_GLOBAL
-    _GRADSETTINGS_T_USE_GLOBAL _LMAPBLENDINGMODE_ADD _SHADING_B_VERTEX_COLOR _SHADING_D_VERTEX_COLOR
-    _SHADING_F_VERTEXCOLOR _SHADING_L_VERTEX_COLOR _SHADING_R_VERTEX_COLOR _SHADING_T_VERTEX_COLOR
+    _GRADSETTINGS_T_USE_GLOBAL _LMAPBLENDINGMODE_ADD _SHADING_B_SOLID_COLOR _SHADING_D_SOLID_COLOR
+    _SHADING_F_SOLIDCOLOR _SHADING_L_SOLID_COLOR _SHADING_R_SOLID_COLOR _SHADING_T_SOLID_COLOR
+    _SHOWBACK_ON _SHOWBOTTOM_ON _SHOWFRONT_ON _SHOWLEFT_ON _SHOWRIGHT_ON _SHOWTOP_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -81,7 +82,7 @@ Material:
     - _FogHeight: 10
     - _FogYStartPos: 0
     - _GlossMapScale: 1
-    - _Glossiness: 0
+    - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _GradSettings_B: 0
     - _GradSettings_D: 0
@@ -102,7 +103,7 @@ Material:
     - _LmapBlendingMode: 0
     - _LmapEnable: 0
     - _MainTexturePower: 0
-    - _Metallic: 0.548
+    - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
     - _OtherSettings: 0
@@ -147,13 +148,13 @@ Material:
     m_Colors:
     - _AOColor: {r: 1, g: 1, b: 1, a: 1}
     - _AmbientColor: {r: 0, g: 0, b: 0, a: 0}
-    - _Color: {r: 0.5660378, g: 0.5660378, b: 0.5660378, a: 1}
-    - _Color1_B: {r: 0.6509434, g: 0.48206657, b: 0.48206657, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color1_B: {r: 0.054901965, g: 0.18431373, b: 0.2627451, a: 1}
     - _Color1_D: {r: 0, g: 0, b: 0, a: 1}
-    - _Color1_F: {r: 0.5471698, g: 0.5471698, b: 0.5471698, a: 1}
-    - _Color1_L: {r: 0.6399461, g: 0.6391955, b: 0.7169812, a: 1}
-    - _Color1_R: {r: 1, g: 1, b: 1, a: 1}
-    - _Color1_T: {r: 0.4056604, g: 0.4056604, b: 0.4056604, a: 1}
+    - _Color1_F: {r: 0.20784315, g: 0.3647059, b: 0.5137255, a: 1}
+    - _Color1_L: {r: 0.35686275, g: 0.68235296, b: 0.7294118, a: 1}
+    - _Color1_R: {r: 0.054901965, g: 0.18431373, b: 0.2627451, a: 1}
+    - _Color1_T: {r: 0.35686275, g: 0.68235296, b: 0.7294118, a: 1}
     - _Color2_B: {r: 1, g: 1, b: 1, a: 1}
     - _Color2_D: {r: 1, g: 1, b: 1, a: 1}
     - _Color2_F: {r: 1, g: 1, b: 1, a: 1}
