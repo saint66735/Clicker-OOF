@@ -2186,7 +2186,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1138910676}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -5.77}
+  m_LocalPosition: {x: 0, y: 0, z: -6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -3079,61 +3079,62 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   provinces:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 1375450222}
+  - {fileID: 1945833842}
+  - {fileID: 705462288}
+  - {fileID: 1480484822}
+  - {fileID: 1215121914}
+  - {fileID: 717120009}
+  - {fileID: 1759728765}
+  - {fileID: 1051053253}
+  - {fileID: 9197483}
+  - {fileID: 213501132}
+  - {fileID: 179013491}
+  - {fileID: 976258275}
+  - {fileID: 858256347}
+  - {fileID: 732276268}
+  - {fileID: 923858793}
+  - {fileID: 841443107}
+  - {fileID: 1476923993}
+  - {fileID: 1100719689}
+  - {fileID: 504591402}
+  - {fileID: 329202496}
+  - {fileID: 1837010565}
+  - {fileID: 1789312551}
+  - {fileID: 379810885}
+  - {fileID: 1885458381}
+  - {fileID: 1573606020}
+  - {fileID: 1957763351}
+  - {fileID: 669526405}
+  - {fileID: 1774750193}
+  - {fileID: 832773635}
+  - {fileID: 842806993}
+  - {fileID: 1542632334}
+  - {fileID: 1545634404}
+  - {fileID: 1875741223}
+  - {fileID: 854292888}
+  - {fileID: 1819109121}
+  - {fileID: 491115361}
+  - {fileID: 973930236}
+  - {fileID: 1808180175}
+  - {fileID: 321674918}
+  - {fileID: 1397658632}
+  - {fileID: 1262701312}
+  - {fileID: 331183601}
+  - {fileID: 1525897781}
+  - {fileID: 1514687411}
+  - {fileID: 1341323932}
+  - {fileID: 1046412073}
+  - {fileID: 582242798}
+  - {fileID: 479274950}
+  - {fileID: 1983968165}
+  - {fileID: 477106377}
+  - {fileID: 1885986372}
+  - {fileID: 1739698506}
+  - {fileID: 160197320}
+  - {fileID: 136088869}
+  - {fileID: 1529449684}
+  provinceObjects: []
   provinceDisplay: {fileID: 1432535383}
   moneyDisplay: {fileID: 932962239}
   dropdown: {fileID: 1563299992}
@@ -3141,6 +3142,9 @@ MonoBehaviour:
   panel: {fileID: 1766842095}
   BuildButton: {fileID: 2112111186}
   buildingInfo: {fileID: 2018572302}
+  factoryPrefab: {fileID: 1422815804019776, guid: b95324a3c9c6fa649ae93fc7ff67124a,
+    type: 2}
+  planet: {fileID: 302773033}
   currentProvince: 0
   money: 0
   globalMultiplier: 0
@@ -3152,7 +3156,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1660543058}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.4039038, y: 0.500149, z: -3.74814}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

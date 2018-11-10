@@ -54,6 +54,7 @@ public class GameLogic : MonoBehaviour {
     List<Province> provinceData;
     List<Building> buildings;
     public List<GameObject> provinces;
+    public GameObject[] provinceObjects;
     public Text provinceDisplay;
     public Text moneyDisplay;
     public Dropdown dropdown;
@@ -61,6 +62,8 @@ public class GameLogic : MonoBehaviour {
     public Image panel;
     public Button BuildButton;
     public Text buildingInfo;
+    public GameObject factoryPrefab;
+    public GameObject planet;
 
     public int currentProvince;
     public float money;
@@ -73,6 +76,7 @@ public class GameLogic : MonoBehaviour {
     void Start () {
         provinceData = new List<Province>();
         buildings = new List<Building>();
+        provinceObjects = new GameObject[55];
         ReadBuildingData();
         ReadProvinceData();
         BuildProvince();
@@ -96,6 +100,7 @@ public class GameLogic : MonoBehaviour {
         ProvinceIncome();
         calculateMoney();
 
+        Debug.Log(provinces[42].transform.TransformPoint(Vector3.up));
 
         if (!provinceData[currentProvince].unlocked)
         {
@@ -169,6 +174,15 @@ public class GameLogic : MonoBehaviour {
             provinceData[currentProvince].buildings[id].level++;
             money -= cost;
             //provinceData[currentProvince].buildings[id].building.cost*= 1.1f;
+            if (provinceObjects[currentProvince] == null)
+            {
+                GameObject temp = Instantiate(factoryPrefab, provinces[currentProvince].transform.TransformPoint(Vector3.up), new Quaternion());
+                
+                temp.transform.LookAt(planet.transform);
+                //temp.transform.rotation = Quaternion.Euler(temp.transform.rotation.eulerAngles * 1);
+                provinceObjects[currentProvince] = temp;
+                temp.transform.parent = provinces[currentProvince].transform;
+            }
         }
     }
     void calculateMoney()
