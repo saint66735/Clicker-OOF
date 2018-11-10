@@ -6,20 +6,21 @@ using UnityEngine.UI;
 
 class Building
 {
-    string name;
-    double production;
-    double cost;
-    public Building(string name ,double production, double cost)
+    public string name;
+    public float cost;
+    public float production;
+    
+    public Building(string name, float cost, float production )
     {
         this.name = name;
-        this.production = production;
         this.cost = cost;
+        this.production = production;
     }
 }
 class BuildingInstance
 {
-    Building building;
-    int level;
+    public Building building;
+    public int level;
     public BuildingInstance(Building building)
     {
         this.building = building;
@@ -29,17 +30,19 @@ class BuildingInstance
 class Province
 {
     public string name;
-    public double cost;
-    public double baseProduction;
+    public float cost;
+    public float baseProduction;
     public List<BuildingInstance> buildings;
     public bool unlocked;
+    public float income;
 
-    public Province(string name, double cost, double baseProduction)
+    public Province(string name, float cost, float baseProduction)
     {
         this.name = name;
         this.cost = cost;
         this.baseProduction = baseProduction;
         unlocked = false;
+        income = 0;
     }
 }
 public class GameLogic : MonoBehaviour {
@@ -48,7 +51,16 @@ public class GameLogic : MonoBehaviour {
     List<Building> buildings;
     public List<GameObject> provinces;
     public Text provinceDisplay;
+    public Text moneyDisplay;
+    public Dropdown dropdown;
+    public Button buyButton;
+    public Image panel;
+    public Button BuildButton;
+
     public int currentProvince;
+    public float money;
+
+    float time=0;
     // Use this for initialization
     void Start () {
         provinceData = new List<Province>();
@@ -56,11 +68,42 @@ public class GameLogic : MonoBehaviour {
         ReadBuildingData();
         ReadProvinceData();
         BuildProvince();
+
+        dropdown.options.Clear();
+        foreach (var building in buildings)
+        {
+            dropdown.options.Add(new Dropdown.OptionData(building.name));
+        }
+        
+
+        money = 25;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        provinceDisplay.text ="" + currentProvince;
+        time += Time.deltaTime;
+        ProvinceIncome();
+        calculateMoney();
+
+
+        if (!provinceData[currentProvince].unlocked)
+        {
+            panel.color = new Color(50,50,50);
+            buyButton.interactable = true;
+            BuildButton.interactable = false;
+            provinceDisplay.text = "name:" + provinceData[currentProvince].name + '\n' + "cost:" + provinceData[currentProvince].cost +
+                '\n' + "production:" + provinceData[currentProvince].baseProduction;
+        }
+        if (provinceData[currentProvince].unlocked)
+        {
+            panel.color = new Color(255, 255, 255);
+            buyButton.interactable = false;
+            BuildButton.interactable = true;
+            provinceDisplay.text = "name:" + provinceData[currentProvince].name + '\n' + "income:" +
+                provinceData[currentProvince].income;
+             
+        }
+        moneyDisplay.text ="money:"+ money;
 	}
 
     void ReadProvinceData()
@@ -69,7 +112,7 @@ public class GameLogic : MonoBehaviour {
         foreach (var line in lines)
         {
             string[] parts = line.Split(' ');
-            provinceData.Add(new Province(parts[0], double.Parse(parts[1]), double.Parse(parts[2])));
+            provinceData.Add(new Province(parts[0], float.Parse(parts[1]), float.Parse(parts[2])));
         }
     }
     void BuildProvince()
@@ -90,7 +133,51 @@ public class GameLogic : MonoBehaviour {
         foreach (var line in lines)
         {
             string[] parts = line.Split(' ');
-            buildings.Add(new Building(parts[0], double.Parse(parts[1]), double.Parse(parts[2])));
+            buildings.Add(new Building(parts[0], float.Parse(parts[1]), float.Parse(parts[2])));
+        }
+    }
+    public void Buy()
+    {
+        if (!provinceData[currentProvince].unlocked && money > provinceData[currentProvince].cost)
+        {
+            provinceData[currentProvince].unlocked = true;
+            money -= provinceData[currentProvince].cost;
+        }
+    }
+    public void Build()
+    {
+        int id = dropdown.value;
+        if (money > provinceData[currentProvince].buildings[id].building.cost)
+        {
+            provinceData[currentProvince].buildings[id].level++;
+            money -= provinceData[currentProvince].buildings[id].building.cost;
+            provinceData[currentProvince].buildings[id].building.cost*= 1.1f;
+        }
+    }
+    void calculateMoney()
+    {
+        if (time > 2)
+        {
+            float income = 0;
+            foreach (var province in provinceData)
+            {
+                income += province.income;
+            }
+            money += income;
+            time = 0;
+        }
+    }
+    void ProvinceIncome()
+    {
+
+        foreach (var province in provinceData)
+        {
+            float income = 0;
+            foreach (var building in province.buildings)
+            {
+                income += (building.building.production * building.level) * province.baseProduction;
+            }
+            province.income = income;
         }
     }
 }

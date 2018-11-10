@@ -24,7 +24,7 @@ public class SelectProvince : MonoBehaviour {
                 if (hit.transform.tag == "Province")
                 {
                     int id = int.Parse(hit.transform.name);
-                    gameLogic.currentProvince = id;
+                    gameLogic.currentProvince = id-1;
                 }
             }
         }
