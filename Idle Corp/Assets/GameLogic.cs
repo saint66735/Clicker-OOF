@@ -35,8 +35,8 @@ class Province
     public List<BuildingInstance> buildings;
     public bool unlocked;
     public float income;
-    public float multiplier;
-    public float increaseMultiplierCost;
+    public float multiplier = 1;
+    public float increaseMultiplierCost = 5;
 
     public Province(string name, float cost, float baseProduction)
     {
@@ -64,6 +64,8 @@ public class GameLogic : MonoBehaviour {
     public Text buildingInfo;
     public GameObject factoryPrefab;
     public GameObject planet;
+    public Canvas canvas;
+    public Canvas menu;
 
     public int currentProvince;
     public float money;
@@ -74,6 +76,7 @@ public class GameLogic : MonoBehaviour {
     float increaseMoneyOnClickCost;
     float buyProvinceCostMultiplier;
 
+    bool paused = false;
     float time=0;
     // Use this for initialization
     void Start () {
@@ -91,13 +94,16 @@ public class GameLogic : MonoBehaviour {
         }
         
 
-        money = 0;
+        money = 200;
         globalMultiplier = 1;
         increaseGlobalMultiplierCost = 20;
         moneyOnClick = 1;
         increaseGlobalMultiplierCost = 15;
         increaseMoneyOnClickCost = 20;
         buyProvinceCostMultiplier = 1;
+
+        //Save();
+        ReadSave();
     }
 
     // Update is called once per frame
@@ -106,6 +112,17 @@ public class GameLogic : MonoBehaviour {
         ProvinceIncome();
         calculateMoney();
 
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (!paused)
+            {
+                Pause();
+            }
+            else if (paused)
+            {
+                Unpause();
+            }
+        }
         //provinces[currentProvince].transform.TransformDirection(Vector3.down);
         //Debug.Log(provinces[currentProvince].transform.TransformPoint(Vector3.down));
         //Debug.Log(provinces[currentProvince].transform - Camera.main.transform);
@@ -264,6 +281,57 @@ public class GameLogic : MonoBehaviour {
         else output = System.Math.Round(l) + "";
         return output;
     }
-    public void Save() { }
-    public void ReadSave() { }
+    public void Save()
+    {
+        using (var fr = File.CreateText("Assets//save.txt"))
+        {
+
+            fr.WriteLine("{0} {1} {2} {3} {4} {5}",money, globalMultiplier,moneyOnClick, increaseGlobalMultiplierCost,
+                increaseMoneyOnClickCost,buyProvinceCostMultiplier);
+            for (int i = 0; i < 55; i++)
+            {
+                fr.Write("{0} {1} {2} ", provinceData[i].unlocked, provinceData[i].multiplier,
+                    provinceData[i].increaseMultiplierCost);
+                //Debug.Log(provinceData[i].multiplier);
+                foreach (var building in provinceData[i].buildings)
+                {
+                    fr.Write("{0} ",building.level);
+                }
+                fr.WriteLine();
+            }
+        }
+    }
+    public void ReadSave()
+    {
+        string[] lines = File.ReadAllLines("Assets//save.txt");
+        string[] parts = lines[0].Split(' ');
+
+        money = float.Parse( parts[0]);
+        globalMultiplier = float.Parse(parts[1]);
+        moneyOnClick = float.Parse(parts[2]);
+        increaseGlobalMultiplierCost = float.Parse(parts[3]);
+        increaseMoneyOnClickCost = float.Parse(parts[4]);
+        buyProvinceCostMultiplier = float.Parse(parts[5]);
+
+        for (int i=0;i<54;i++)
+        {
+            string[] parts1 = lines[i+1].Split(' ');
+            //Debug.Log( parts1.Length);
+            provinceData[i].unlocked = bool.Parse(parts1[0]);
+            provinceData[i].multiplier = float.Parse( parts1[1]);
+            provinceData[i].increaseMultiplierCost = float.Parse( parts1[2]);
+            for (int d = 0; d < buildings.Count; d++)
+            {
+                provinceData[i].buildings[d].level = int.Parse(parts1[d+3]);
+            }
+        }
+    }
+    public void Pause()
+    {
+        canvas.enabled = false;
+    }
+    public void Unpause()
+    {
+        canvas.enabled = true;
+    }
 }
