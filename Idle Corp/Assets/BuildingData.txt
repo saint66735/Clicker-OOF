@@ -1,3 +1,3 @@
-Factory 10 1
-Wind_Turbine 30 3.3
-Solar_panel 100 13
+Factory 100 10
+Wind_Turbine 1000 110
+Solar_panel 10000 1200
