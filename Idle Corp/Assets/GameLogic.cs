@@ -76,7 +76,7 @@ public class GameLogic : MonoBehaviour {
     float increaseMoneyOnClickCost;
     float buyProvinceCostMultiplier;
 
-    bool paused = false;
+    public bool paused = false;
     float time=0;
     // Use this for initialization
     void Start () {
@@ -103,12 +103,12 @@ public class GameLogic : MonoBehaviour {
         buyProvinceCostMultiplier = 1;
 
         //Save();
-        ReadSave();
+        if(File.Exists("Assets//save.txt")) ReadSave();
     }
 
     // Update is called once per frame
     void Update () {
-        time += Time.deltaTime;
+        if(!paused)time += Time.deltaTime;
         ProvinceIncome();
         calculateMoney();
 
@@ -117,10 +117,12 @@ public class GameLogic : MonoBehaviour {
             if (!paused)
             {
                 Pause();
+                paused = true;
             }
             else if (paused)
             {
                 Unpause();
+                paused = false;
             }
         }
         //provinces[currentProvince].transform.TransformDirection(Vector3.down);
@@ -329,9 +331,15 @@ public class GameLogic : MonoBehaviour {
     public void Pause()
     {
         canvas.enabled = false;
+        menu.enabled = true;
     }
     public void Unpause()
     {
         canvas.enabled = true;
+        menu.enabled = false;
+    }
+    public void Exit()
+    {
+        Application.Quit();
     }
 }

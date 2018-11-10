@@ -14,7 +14,7 @@ public class SelectProvince : MonoBehaviour {
     Color lastColor = new Color(0,0,0);
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !gameLogic.paused)
         {
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
